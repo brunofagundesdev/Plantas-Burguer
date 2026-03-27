@@ -69,7 +69,8 @@ header a {
 }
 
 .form-container>input[type="text"],
-.form-container>input[type="number"] {
+.form-container>input[type="number"],
+.form-container>input[type="email"] {
     padding: 7px 5px;
 }
 

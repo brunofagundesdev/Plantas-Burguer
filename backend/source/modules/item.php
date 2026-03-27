@@ -45,10 +45,14 @@ class Item {
         return $result;
     }
 
-    public static function update($id, $name, $price, $description) {
+    public static function update($id, $name, $description, $price) {
         $conexao = Database::connect();
     
-        $query = "UPDATE item SET name = '$name', description = '$description', price = '$price' WHERE ID = '$id'";
+        $query = "
+            UPDATE item 
+            SET name = '$name', description = '$description', price = '$price'
+            WHERE ID = '$id';
+        ";
     
         mysqli_query($conexao, $query);
         mysqli_close($conexao);
@@ -58,7 +62,10 @@ class Item {
 
         $conexao = Database::connect();
 
-        $query = "DELETE FROM item WHERE ID = '$id'";
+        $query = "
+            DELETE FROM item
+            WHERE ID = '$id';
+        ";
 
         mysqli_query($conexao, $query);
         mysqli_close($conexao);

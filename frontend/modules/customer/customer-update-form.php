@@ -26,9 +26,8 @@
     <main>
         <section>
             <div class="container">
-
-                <h2 class="title">Editar Cliente <?= $customer["id"] ?></h2>
-                <form action="./customer-update-form.php" method="POST" class="form-container">
+                <h2 class="title">Editar Cliente</h2>
+                <form action="./customer-update-form.php?action=update" method="POST" class="form-container">
                     <label>Nome:</label>
                     <input type="text" name="name" value="<?= $customer["name"]; ?>" required><br><br>
 
@@ -47,17 +46,17 @@
             </div>
         </section>
     </main>
+
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['action'] == 'update') {
+        $id = $_POST["id_update"];
+        $name = $_POST["name"];
+        $email = $_POST["email"];
+
+        Customer::update($id, $name, $email);
+        header('Location: ./customer-table-form.php');
+    }
+    ?>
 </body>
 
 </html>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id_update"];
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-
-    Customer::update($id, $name, $email);
-}
-
-?>

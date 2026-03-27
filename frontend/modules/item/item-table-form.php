@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lanches</title>
 
-    <link rel="shortcut icon" href="../../images/planta-logo.ico" type="image/x-icon">
-
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/table.css">
     <link rel="stylesheet" href="../../css/item.css">
+
+    <link rel="shortcut icon" href="../../images/planta-logo.ico" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,32 +55,24 @@
                             <td>" . $row["description"] . "</td>
                             <td>" . $row["price"] . "</td>"  .
                             "<td> 
-                                <form action='./item-table-form.php?action=delete' method='POST'>
-                                    <input type='hidden' name='id_delete' value='" . $row["id"] . "'>
-                                    <input type='submit' value='Remover'>
+                                <form action='./item-update-form.php' method='POST' class='button-update'>
+                                <input type='hidden' name='id_update' value='" . $row["id"] . "'>
+                                <input type='submit' value='Editar'>
                                 </form>
-                            </td>" .
+                                </td>" .
                             "<td> 
-                                <form action='./item-update-form.php' method='POST'>
-                                    <input type='hidden' name='id_update' value='" . $row["id"] . "'>
-                                    <input type='submit' value='Editar'>
+                                <form action='./item-table-form.php?action=delete' method='POST' class='button-delete'>
+                                <input type='hidden' name='id_delete' value='" . $row["id"] . "'>
+                                <input type='submit' value='Remover'>
                                 </form>
                             </td>" .
                             "</tr>";
                     }
                     ?>
-
                 </table>
-
-            </div>
-        </section>
-        <section>
-            <div class="container">
-                <a href="./customer-table-form.php" class="change">Voltar aos clientes</a>
             </div>
         </section>
     </main>
-
 
 </body>
 
@@ -92,6 +84,7 @@ if ($_GET['action'] == 'delete') {
     $id_delete = $_POST["id_delete"];
 
     Item::delete($id_delete);
+    header('Location: ./item-table-form.php');
 }
 
 ?>

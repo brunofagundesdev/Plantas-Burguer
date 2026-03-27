@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
+    <title>Pedidos</title>
 
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/table.css">
-    <link rel="stylesheet" href="../../css/customer.css">
+    <link rel="stylesheet" href="../../css/demand.css">
 
     <link rel="shortcut icon" href="../../images/planta-logo.ico" type="image/x-icon">
 
@@ -24,42 +24,80 @@
         </div>
     </header>
     <main>
-        <section id="hero-customer" class="image hero">
+        <section id="hero-demand" class="image hero">
             <div class="container">
-                <h2 class="title">Clientes</h2>
+                <h2 class="title">Pedidos</h2>
             </div>
         </section>
         <section class="content">
             <div class="container">
-                <h2 class="title">Clientes Cadastrados <a href="./customer-create-form.php">+</a></h2>
+                <h2 class="title">Pedidos Cadastrados <a href="./demand-create-form.php">+</a></h2>
+
+
+                <div class="demands">
+                    <?php
+                    require_once("../../../backend/source/modules/demand.php");
+
+                    $demands = Demand::list();
+
+                    while ($demand = mysqli_fetch_assoc($demands)) {
+                        $items_boxes = "<ul>";
+                        foreach ($demand["items"] as $item) {
+                            $items_boxes .= "
+                                <li>" .
+                                $item["name"]
+                                . "</li>
+                            ";
+                        }
+                        $items_boxes .= "</ul>";
+
+                        echo "
+                            <div class='demand'>
+                                <h3>Pedido - " . $demand["id"] . "</h3>
+
+                                
+                            </div>";
+                    }
+                    ?>
+                </div>
+
+
+
+
+
+
+
+
                 <table>
                     <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Email</th>
+                        <th>Id - Pedido</th>
+                        <th>Id - Cliente</th>
+                        <th>Nome - Cliente</th>
+                        <th>Preço</th>
                         <th> # </th>
                         <th> # </th>
                     </tr>
 
                     <?php
-                    require_once("../../../backend/source/modules/customer.php");
+                    require_once("../../../backend/source/modules/demand.php");
 
-                    $customers = Customer::list();
+                    $demands = Item::list();
 
-                    while ($row = mysqli_fetch_assoc($customers)) {
+                    while ($row = mysqli_fetch_assoc($demands)) {
                         echo
                         "<tr>
                             <td>" . $row["id"] . "</td>
                             <td>" . $row["name"] . "</td>
-                            <td>" . $row["email"] . "</td>"  .
+                            <td>" . $row["description"] . "</td>
+                            <td>" . $row["price"] . "</td>"  .
                             "<td> 
-                                <form action='./customer-update-form.php' method='POST' class='button-update'>
+                                <form action='./demand-update-form.php' method='POST' class='button-update'>
                                 <input type='hidden' name='id_update' value='" . $row["id"] . "'>
                                 <input type='submit' value='Editar'>
                                 </form>
                                 </td>" .
                             "<td> 
-                                <form action='./customer-table-form.php?action=delete' method='POST' class='button-delete'>
+                                <form action='./demand-table-form.php?action=delete' method='POST' class='button-delete'>
                                 <input type='hidden' name='id_delete' value='" . $row["id"] . "'>
                                 <input type='submit' value='Remover'>
                                 </form>
@@ -81,8 +119,8 @@
 if ($_GET['action'] == 'delete') {
     $id_delete = $_POST["id_delete"];
 
-    Customer::delete($id_delete);
-    header('Location: ./customer-table-form.php');
+    Item::delete($id_delete);
+    header('Location: ./demand-table-form.php');
 }
 
 ?>
