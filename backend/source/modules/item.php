@@ -1,12 +1,14 @@
 <?php
 
+require_once(__DIR__ . "/../infra/database.php");
+
 class Item {
 
     public static function create($name, $description, $price) {
 
         $conexao = Database::connect();
 
-        $query = "INSERT INTO item (name, description, price) VALUES ($name, $description, $price)";
+        $query = "INSERT INTO item (name, description, price) VALUES ('$name', '$description', '$price')";
 
         mysqli_query($conexao, $query);
         mysqli_close($conexao);
@@ -18,7 +20,7 @@ class Item {
         $query = "
             SELECT name, description, price
             FROM item
-            WHERE id = $id;
+            WHERE id = '$id';
         ";
     
         $result = mysqli_query($conexao, $query);
@@ -46,7 +48,7 @@ class Item {
     public static function update($id, $name, $price, $description) {
         $conexao = Database::connect();
     
-        $query = "UPDATE item SET name = $name, description = $description, price = $price WHERE ID = $id";
+        $query = "UPDATE item SET name = '$name', description = '$description', price = '$price' WHERE ID = '$id'";
     
         mysqli_query($conexao, $query);
         mysqli_close($conexao);
@@ -56,7 +58,7 @@ class Item {
 
         $conexao = Database::connect();
 
-        $query = "DELETE FROM item WHERE ID = $id";
+        $query = "DELETE FROM item WHERE ID = '$id'";
 
         mysqli_query($conexao, $query);
         mysqli_close($conexao);

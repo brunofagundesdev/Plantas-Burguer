@@ -7,7 +7,7 @@ class Customer {
 
         $conexao = Database::connect();
 
-        $query = "INSERT INTO customer (name, email) VALUES ($name, $email)";
+        $query = "INSERT INTO customer (name, email) VALUES ('$name', '$email')";
 
         $result = mysqli_query($conexao, $query);
         mysqli_close($conexao);
@@ -16,7 +16,11 @@ class Customer {
     public static function update($id, $name, $email) {
         $conexao = Database::connect();
     
-        $query = "UPDATE customer SET name = $name, email = $email WHERE ID = $id";
+        $query = "
+            UPDATE customer
+            SET name = '$name', email = '$email'
+            WHERE ID = '$id';
+        ";
     
         $result = mysqli_query($conexao, $query);
         mysqli_close($conexao);
@@ -29,7 +33,7 @@ class Customer {
         $query = "
             SELECT name, email
             FROM customer
-            WHERE id = $id;
+            WHERE id = '$id';
         ";
     
         $result = mysqli_query($conexao, $query);

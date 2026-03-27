@@ -1,0 +1,21 @@
+#hero-home {
+    background-image: url(../images/hero.webp);
+}
+
+.home-options{
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.home-option {
+    display: flex;
+    flex-flow: column;
+    padding: 5px;
+    flex: 1;
+}
+
+.home-option:hover {
+    transform: scale(1.1);
+    transition: 0.4s;
+}
