@@ -30,50 +30,27 @@ class Demand {
             mysqli_close($conexao);
         }
     }
-
-    public static function get($id) {
+    
+     public static function list() {
         $conexao = Database::connect();
     
         $query = "
-            SELECT name, description, price
-            FROM item
-            WHERE id = '$id'
-            LIMIT 1;
-        ";
-    
-        $result = mysqli_query($conexao, $query);
-        mysqli_close($conexao);
-
-        return mysqli_fetch_assoc($result);
-    }
-    
-     public static function list($ordernation = "id", $name = "") {
-        $conexao = Database::connect();
-    
-        $query = "
-            SELECT id, name, description, price
-            FROM item
-            WHERE name LIKE '%$name%'
-            ORDER BY $ordernation;
+            SELECT demand.id, demand.timetable,
+            customer.id, customer.name, customer.email,
+            item.id, item.name, item.price, demand_item.quantity,
+            sum(item.price * demand_item.quantity) as total
+            FROM demand
+            JOIN demand_item on demand.id = demand_item.demand
+            JOIN item on item.id = demand_item.item 
+            JOIN customer on demand.customer = customer.id
+            GROUP BY demand.id
+            ORDER BY demand.timetable;
         ";
     
         $result = mysqli_query($conexao, $query);
         mysqli_close($conexao);
 
         return $result;
-    }
-
-    public static function update($id, $name, $description, $price) {
-        $conexao = Database::connect();
-    
-        $query = "
-            UPDATE item 
-            SET name = '$name', description = '$description', price = '$price'
-            WHERE ID = '$id';
-        ";
-    
-        mysqli_query($conexao, $query);
-        mysqli_close($conexao);
     }
 
     public static function delete($id) {

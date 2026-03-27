@@ -24,8 +24,9 @@ create table item (
 );
 
 create table demand_item (
-    demand int,
-    item int,
+    demand int not null,
+    item int not null,
+    quantity int not null,
     primary key (demand, item),
     foreign key (demand) references demand(id) on delete cascade,
     foreign key (item) references item(id) on delete cascade

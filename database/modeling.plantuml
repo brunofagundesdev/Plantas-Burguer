@@ -1,0 +1,49 @@
+@startuml modeling
+scale 1.00
+skinparam ClassBackgroundColor White
+skinparam ClassBorderColor Black
+skinparam ClassAttributeIconSize 0
+skinparam ClassFontStyle Bold
+skinparam ClassFontSize 12
+skinparam ClassAttributeFontSize 12
+skinparam NoteBackgroundColor White
+skinparam NoteBorderColor Black
+skinparam ArrowColor Black
+skinparam Shadowing False
+skinparam LineType Ortho
+hide Circle
+hide Empty Members
+
+entity customer {
+    +id : int <<PK>>
+    --
+    name : varchar(100)
+    email : varchar(254)
+}
+
+entity demand {
+    +id : int <<PK>>
+    --
+    timetable : timestamp
+    customer : int <<FK>>
+}
+
+entity item {
+    +id : int <<PK>>
+    --
+    name : varchar(200)
+    description : text
+    price : float
+}
+
+entity demand_item {
+    +demand : int <<PK, FK>>
+    +item : int <<PK, FK>>
+}
+
+' Relacionamentos
+customer ||--o{ demand : "faz"
+demand ||--o{ demand_item : "contém"
+item ||--o{ demand_item : "participa"
+
+@enduml
