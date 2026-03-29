@@ -17,6 +17,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
+<?php
+require_once("../../../backend/source/modules/customer.php");
+
+
+if ($_GET['action'] == 'delete') {
+    $id_delete = $_POST["id_delete"];
+
+    Customer::delete($id_delete);
+    header('Location: ./customer-table-form.php');
+}
+
+?>
+
 <body>
     <header>
         <div class="container">
@@ -42,8 +55,6 @@
                     </tr>
 
                     <?php
-                    require_once("../../../backend/source/modules/customer.php");
-
                     $customers = Customer::list();
 
                     while ($row = mysqli_fetch_assoc($customers)) {
@@ -75,14 +86,3 @@
 </body>
 
 </html>
-
-<?php
-
-if ($_GET['action'] == 'delete') {
-    $id_delete = $_POST["id_delete"];
-
-    Customer::delete($id_delete);
-    header('Location: ./customer-table-form.php');
-}
-
-?>

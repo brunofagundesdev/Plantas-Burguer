@@ -15,7 +15,7 @@
         <section>
             <div class="container">
                 <h2 class="title">Cadastrar Lanche</h2>
-                <form action="./item-create-form.php" method="post" class="form-container">
+                <form action="./item-create-form.php?action=create" method="post" class="form-container">
                     <label for="">Nome</label>
                     <input type="text" name="name" maxlength="100" placeholder="Digite o nome" required>
 
@@ -45,7 +45,7 @@
 
 require_once("../../../backend/source/modules/item.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['action'] == 'create') {
 
     $name = $_POST["name"];
     $description = $_POST["description"];

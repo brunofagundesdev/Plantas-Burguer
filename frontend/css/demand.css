@@ -1,3 +1,37 @@
 #hero-demand {
     background-image: url(../images/hero4.jpg);
 }
+
+.form-demand-items {
+    display: flex;
+    gap: 20px;
+    flex-flow: row wrap;
+}
+
+.form-demand-item {
+    flex: 1 300px;
+    display: flex;
+    flex-flow: column;
+}
+
+.demands {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 20px;
+}
+
+.demand {
+    background-color: var(--base2-color);
+    flex: 1 2 400px;
+    padding: 20px;
+    
+}
+
+.demand>ul {
+    margin-left: 15px;
+}
+
+.demand>ul>li::before {
+    content: "• ";
+    font-weight: bold;
+}

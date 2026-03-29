@@ -2,7 +2,9 @@
     --primary-color: #225924;
     --secondary-color: #8D6E63;
     --emphasis-color: #FBC02D;
+    --danger-color: #C62828;
     --base-color: #F5F5F5;
+    --base2-color: #cecece;
 }
 
 * {
@@ -55,7 +57,8 @@ header a {
     color: #FFFFFF;
 }
 
-.title, .title * {
+.title,
+.title * {
     font-size: 3rem;
 }
 
@@ -66,11 +69,13 @@ header a {
 
 .form-container>label {
     margin-top: 15px;
+    font-weight: bold;
 }
 
-.form-container>input[type="text"],
-.form-container>input[type="number"],
-.form-container>input[type="email"] {
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="email"],
+.form-container select {
     padding: 7px 5px;
 }
 
@@ -102,4 +107,20 @@ header a {
 
 .content {
     min-height: 70vh;
+}
+
+.button-delete > input {
+    background-color: var(--danger-color);
+    color: #FFFFFF;
+    padding: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-update > input {
+    background-color: var(--emphasis-color);
+    color: #FFFFFF;
+    padding: 3px;
+    border-radius: 5px;
+    cursor: pointer;
 }

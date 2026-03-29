@@ -17,6 +17,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
+<?php
+require_once("../../../backend/source/modules/demand.php");
+
+if ($_GET['action'] == 'delete') {
+    $id_delete = $_POST["id_delete"];
+
+    Demand::delete($id_delete);
+    header('Location: ./demand-table-form.php');
+}
+
+?>
+
 <body>
     <header>
         <div class="container">
@@ -36,95 +48,43 @@
 
                 <div class="demands">
                     <?php
-                    require_once("../../../backend/source/modules/demand.php");
 
                     $demands = Demand::list();
 
-                    while ($demand = mysqli_fetch_assoc($demands)) {
+                    foreach ($demands as $demand) {
+
                         $items_boxes = "<ul>";
                         foreach ($demand["items"] as $item) {
-                            $items_boxes .= "
-                                <li>" .
-                                $item["name"]
-                                . "</li>
-                            ";
+                            $items_boxes .= "<li><i>" . $item["name"] . "</i> x" . $item["quantity"] . " - R$" . number_format($item["price"], 2, ',', '.') . " cada → R$" . number_format($item["subtotal"], 2, ',', '.') . "</li>";
                         }
                         $items_boxes .= "</ul>";
 
                         echo "
                             <div class='demand'>
-                                <h3>Pedido - " . $demand["id"] . "</h3>
-
-                                
+                                <p><b>Pedido:</b><i> " . $demand["id"] . "</i></p>
+                                <p><b>Cliente:</b><i> " . $demand["customer_name"] . " (ID: " . $demand["customer_id"] . ")</i></p>
+                                <p><b>Horário:</b><i> " . date('d/m/Y H:i:s', strtotime($demand["timetable"])) . "</i></p>
+                                <p><b>Itens:</b></p>"
+                            . $items_boxes .
+                            "<p><b>Total: </b>R$" . number_format($demand["total"], 2, ',', '.') . "</p>
+                                <form action='./demand-table-form.php?action=delete' method='POST' class='button-delete'>
+                                    <input type='hidden' name='id_delete' value='" . $demand["id"] . "'>
+                                    <input type='submit' value='Remover'>
+                                </form>
                             </div>";
+                        // var_dump($demand);
                     }
                     ?>
                 </div>
-
-
-
-
-
-
-
-
-                <table>
-                    <tr>
-                        <th>Id - Pedido</th>
-                        <th>Id - Cliente</th>
-                        <th>Nome - Cliente</th>
-                        <th>Preço</th>
-                        <th> # </th>
-                        <th> # </th>
-                    </tr>
-
-                    <?php
-                    require_once("../../../backend/source/modules/demand.php");
-
-                    $demands = Item::list();
-
-                    while ($row = mysqli_fetch_assoc($demands)) {
-                        echo
-                        "<tr>
-                            <td>" . $row["id"] . "</td>
-                            <td>" . $row["name"] . "</td>
-                            <td>" . $row["description"] . "</td>
-                            <td>" . $row["price"] . "</td>"  .
-                            "<td> 
-                                <form action='./demand-update-form.php' method='POST' class='button-update'>
-                                <input type='hidden' name='id_update' value='" . $row["id"] . "'>
-                                <input type='submit' value='Editar'>
-                                </form>
-                                </td>" .
-                            "<td> 
-                                <form action='./demand-table-form.php?action=delete' method='POST' class='button-delete'>
-                                <input type='hidden' name='id_delete' value='" . $row["id"] . "'>
-                                <input type='submit' value='Remover'>
-                                </form>
-                            </td>" .
-                            "</tr>";
-                    }
-                    ?>
                 </table>
             </div>
         </section>
 
         <section>
-            
+
         </section>
     </main>
 
 </body>
 
 </html>
-
-<?php
-
-if ($_GET['action'] == 'delete') {
-    $id_delete = $_POST["id_delete"];
-
-    Item::delete($id_delete);
-    header('Location: ./demand-table-form.php');
-}
-
-?>

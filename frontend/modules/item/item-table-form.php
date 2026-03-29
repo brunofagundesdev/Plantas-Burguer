@@ -16,6 +16,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
+<?php
+require_once("../../../backend/source/modules/item.php");
+
+if ($_GET['action'] == 'delete') {
+    $id_delete = $_POST["id_delete"];
+
+    Item::delete($id_delete);
+    header('Location: ./item-table-form.php');
+}
+
+?>
 
 <body>
     <header>
@@ -43,8 +54,6 @@
                     </tr>
 
                     <?php
-                    require_once("../../../backend/source/modules/item.php");
-
                     $items = Item::list();
 
                     while ($row = mysqli_fetch_assoc($items)) {
@@ -56,14 +65,14 @@
                             <td>" . $row["price"] . "</td>"  .
                             "<td> 
                                 <form action='./item-update-form.php' method='POST' class='button-update'>
-                                <input type='hidden' name='id_update' value='" . $row["id"] . "'>
-                                <input type='submit' value='Editar'>
+                                    <input type='hidden' name='id_update' value='" . $row["id"] . "'>
+                                    <input type='submit' value='Editar'>
                                 </form>
                                 </td>" .
                             "<td> 
                                 <form action='./item-table-form.php?action=delete' method='POST' class='button-delete'>
-                                <input type='hidden' name='id_delete' value='" . $row["id"] . "'>
-                                <input type='submit' value='Remover'>
+                                    <input type='hidden' name='id_delete' value='" . $row["id"] . "'>
+                                    <input type='submit' value='Remover'>
                                 </form>
                             </td>" .
                             "</tr>";
@@ -77,14 +86,3 @@
 </body>
 
 </html>
-
-<?php
-
-if ($_GET['action'] == 'delete') {
-    $id_delete = $_POST["id_delete"];
-
-    Item::delete($id_delete);
-    header('Location: ./item-table-form.php');
-}
-
-?>
