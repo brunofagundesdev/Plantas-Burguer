@@ -32,6 +32,7 @@ class Demand
     {
         $conection = Database::connect();
 
+        // devolve uma linha por pedido
         $query_demands = "
             SELECT 
                 demand.id AS id,
@@ -47,6 +48,7 @@ class Demand
             ORDER BY demand.id ASC;
         ";
 
+        // devolve varias linha por pedido - pra cada item dele
         $query_items = "
             SELECT 
                 demand_item.demand as demand_id,

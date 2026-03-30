@@ -109,18 +109,39 @@ header a {
     min-height: 70vh;
 }
 
-.button-delete > input {
+.button-delete {
+    margin-top: 10px;
+}
+
+.button-delete>input {
     background-color: var(--danger-color);
+    color: #FFFFFF;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.button-delete>input:hover {
+    background: #a61e1e;
+}
+
+.button-update>input {
+    background-color: var(--emphasis-color);
     color: #FFFFFF;
     padding: 3px;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.button-update > input {
-    background-color: var(--emphasis-color);
+
+.form-search input,
+.form-search select,
+.form-search button{
+    padding: 5px;
+}
+
+.form-search button {
+    background: var(--primary-color);
     color: #FFFFFF;
-    padding: 3px;
     border-radius: 5px;
-    cursor: pointer;
 }

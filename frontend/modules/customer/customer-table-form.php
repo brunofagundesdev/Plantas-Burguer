@@ -19,15 +19,20 @@
 
 <?php
 require_once("../../../backend/source/modules/customer.php");
-
+$customers = Customer::list();
 
 if ($_GET['action'] == 'delete') {
     $id_delete = $_POST["id_delete"];
-
+    
     Customer::delete($id_delete);
-    header('Location: ./customer-table-form.php');
+    $customers = Customer::list();
 }
 
+if ($_GET['action'] == 'search') {
+    $ordenation = $_POST["list_ordenation"];
+    $search = $_POST["list_search"];
+    $customers = Customer::list($ordenation, $search);
+}
 ?>
 
 <body>
@@ -45,6 +50,20 @@ if ($_GET['action'] == 'delete') {
         <section class="content">
             <div class="container">
                 <h2 class="title">Clientes Cadastrados <a href="./customer-create-form.php">+</a></h2>
+
+                <form action="./customer-table-form.php?action=search" method="POST" class="form-search">
+                    <input type="text" placeholder="Buscar clientes" name="list_search">
+                    <select name="list_ordenation">
+                        <?php
+                        $customer_fields = Customer::getFields();
+                        foreach ($customer_fields as $customer_field) {
+
+                            echo "<option value=" . $customer_field . ">" . $customer_field . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <button type="submit">Pesquisar</button>
+                </form>
                 <table>
                     <tr>
                         <th>Id</th>
@@ -55,7 +74,6 @@ if ($_GET['action'] == 'delete') {
                     </tr>
 
                     <?php
-                    $customers = Customer::list();
 
                     while ($row = mysqli_fetch_assoc($customers)) {
                         echo

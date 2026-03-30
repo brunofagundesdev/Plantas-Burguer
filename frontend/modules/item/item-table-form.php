@@ -18,12 +18,19 @@
 </head>
 <?php
 require_once("../../../backend/source/modules/item.php");
+$items = Item::list();
 
 if ($_GET['action'] == 'delete') {
     $id_delete = $_POST["id_delete"];
 
     Item::delete($id_delete);
-    header('Location: ./item-table-form.php');
+    $items = Item::list();
+}
+
+if ($_GET['action'] == 'search') {
+    $ordenation = $_POST["list_ordenation"];
+    $search = $_POST["list_search"];
+    $items = Item::list($ordenation, $search);
 }
 
 ?>
@@ -43,6 +50,21 @@ if ($_GET['action'] == 'delete') {
         <section class="content">
             <div class="container">
                 <h2 class="title">Lanches Cadastrados <a href="./item-create-form.php">+</a></h2>
+
+                <form action="./item-table-form.php?action=search" method="POST" class="form-search">
+                    <input type="text" placeholder="Buscar lanches" name="list_search">
+                    <select name="list_ordenation">
+                        <?php
+                        $items_fields = Item::getFields();
+                        foreach ($items_fields as $items_field) {
+
+                            echo "<option value=" . $items_field . ">" . $items_field . "</option>";
+                        }
+                        ?>
+                    </select>
+                    <button type="submit">Pesquisar</button>
+                </form>
+
                 <table>
                     <tr>
                         <th>Id</th>
@@ -54,15 +76,13 @@ if ($_GET['action'] == 'delete') {
                     </tr>
 
                     <?php
-                    $items = Item::list();
-
                     while ($row = mysqli_fetch_assoc($items)) {
                         echo
                         "<tr>
                             <td>" . $row["id"] . "</td>
                             <td>" . $row["name"] . "</td>
                             <td>" . $row["description"] . "</td>
-                            <td>" . $row["price"] . "</td>"  .
+                            <td>R$" . number_format($row["price"], 2, ",", ".") . "</td>"  .
                             "<td> 
                                 <form action='./item-update-form.php' method='POST' class='button-update'>
                                     <input type='hidden' name='id_update' value='" . $row["id"] . "'>

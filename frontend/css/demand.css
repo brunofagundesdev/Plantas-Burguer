@@ -17,14 +17,15 @@
 .demands {
     display: flex;
     flex-flow: row wrap;
-    gap: 20px;
+    gap: 30px;
 }
 
 .demand {
-    background-color: var(--base2-color);
+    background: white;
     flex: 1 2 400px;
     padding: 20px;
-    
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .demand>ul {

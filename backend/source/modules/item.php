@@ -6,16 +6,16 @@ class Item {
 
     public static function create($name, $description, $price) {
 
-        $conexao = Database::connect();
+        $conection = Database::connect();
 
         $query = "INSERT INTO item (name, description, price) VALUES ('$name', '$description', '$price')";
 
-        mysqli_query($conexao, $query);
-        mysqli_close($conexao);
+        mysqli_query($conection, $query);
+        mysqli_close($conection);
     }
 
     public static function get($id) {
-        $conexao = Database::connect();
+        $conection = Database::connect();
     
         $query = "
             SELECT name, description, price
@@ -23,30 +23,30 @@ class Item {
             WHERE id = '$id';
         ";
     
-        $result = mysqli_query($conexao, $query);
-        mysqli_close($conexao);
+        $result = mysqli_query($conection, $query);
+        mysqli_close($conection);
 
         return mysqli_fetch_assoc($result);
     }
     
-     public static function list($ordernation = "id", $name = "") {
-        $conexao = Database::connect();
+     public static function list($ordernation = "id", $search = "") {
+        $conection = Database::connect();
     
         $query = "
             SELECT id, name, description, price
             FROM item
-            WHERE name LIKE '%$name%'
+            WHERE name LIKE '%$search%' OR description LIKE '%$search%'
             ORDER BY $ordernation;
         ";
     
-        $result = mysqli_query($conexao, $query);
-        mysqli_close($conexao);
+        $result = mysqli_query($conection, $query);
+        mysqli_close($conection);
 
         return $result;
     }
 
     public static function update($id, $name, $description, $price) {
-        $conexao = Database::connect();
+        $conection = Database::connect();
     
         $query = "
             UPDATE item 
@@ -54,22 +54,39 @@ class Item {
             WHERE ID = '$id';
         ";
     
-        mysqli_query($conexao, $query);
-        mysqli_close($conexao);
+        mysqli_query($conection, $query);
+        mysqli_close($conection);
     }
 
     public static function delete($id) {
 
-        $conexao = Database::connect();
+        $conection = Database::connect();
 
         $query = "
             DELETE FROM item
             WHERE ID = '$id';
         ";
 
-        mysqli_query($conexao, $query);
-        mysqli_close($conexao);
+        mysqli_query($conection, $query);
+        mysqli_close($conection);
 
+    }
+
+    public static function getFields(){
+        $conection = Database::connect();
+
+        $query = "
+            DESCRIBE item;
+        ";
+
+        $result = mysqli_query($conection, $query);
+        $columns = [];
+        while($column = mysqli_fetch_assoc($result)) {
+            $columns[] = $column["Field"];
+        }
+        mysqli_close($conection);
+
+        return $columns;
     }
 }
 ?>

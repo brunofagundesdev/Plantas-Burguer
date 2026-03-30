@@ -51,8 +51,6 @@
     </main>
 
     <?php
-    echo $_SERVER["REQUEST_METHOD"];
-    echo $_GET['action'];
     if ($_SERVER["REQUEST_METHOD"] == "POST" && $_GET['action'] == 'update') {
         $id = $_POST["id_update"];
         $name = $_POST["name"];

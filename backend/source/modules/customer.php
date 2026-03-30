@@ -68,6 +68,23 @@ class Customer {
         mysqli_close($conexao);
 
     }
+
+    public static function getFields(){
+        $conection = Database::connect();
+
+        $query = "
+            DESCRIBE customer;
+        ";
+
+        $result = mysqli_query($conection, $query);
+        $columns = [];
+        while($column = mysqli_fetch_assoc($result)) {
+            $columns[] = $column["Field"];
+        }
+        mysqli_close($conection);
+
+        return $columns;
+    }
 }
 
 ?>
