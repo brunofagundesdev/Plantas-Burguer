@@ -1,90 +1,60 @@
-# 🌱 Planta's Burguer
+# 🍔 Planta's Burguer
 
-Sistema simples de gerenciamento de pedidos para uma lancheria vegetariana.
+Planta's Burguer is a simple web application for managing orders in a vegetarian burger restaurant.
 
-## 📌 Sobre o projeto
+The system was developed using PHP and MySQL, focusing on backend fundamentals such as CRUD operations, relational databases, and SQL queries.
 
-O **Planta's Burguer** é uma aplicação web desenvolvida em PHP com MySQL que permite realizar operações básicas de CRUD (Create, Read, Update, Delete) em um sistema de pedidos.
+---
 
-O sistema gerencia:
+## ⚙️ Technologies
 
-* Clientes
-* Itens do cardápio
-* Pedidos
-* Itens de cada pedido
+- PHP
+- MySQL
+- HTML / CSS
 
-## ⚙️ Tecnologias utilizadas
+---
 
-* PHP
-* MySQL
-* HTML + CSS
+## 📦 Features
 
-## 🧩 Funcionalidades
+- Customer management  
+- Item management  
+- Order creation with multiple items  
+- Automatic total calculation  
+- Order listing using SQL JOIN  
+- Item subtotal calculation  
 
-* Cadastro de clientes
-* Cadastro de itens
-* Criação de pedidos com múltiplos itens
-* Cálculo automático do total do pedido
-* Listagem de pedidos com:
+---
 
-  * Cliente
-  * Itens
-  * Quantidade
-  * Subtotal por item
-  * Total geral
+## 🗃️ Project Structure
 
-## 🗃️ Estrutura do projeto
+- Backend and frontend separation  
+- Modular organization by entity (customer, item, order)  
+- Dedicated database connection file  
 
-```
-backend/
-  source/
-    infra/
-      database.php
-    modules/
-      costumer.php
-      item.php
-      order.php
-    .secret
-    .secret.example
+---
 
-database/
-  modeling.plantuml
-  schema.sql
+## 🧠 Concepts Applied
 
-frontend/
-  html/
-  css/
-  images/
-  modules/
-    customer/
-      customer-create-form.php
-      customer-table-form.php
-      customer-update-form.php
-    demand/
-      demand-create-form.php
-      demand-create-form.php
-      demand-table-form.php
-    item/
-      item-table-form.php
-      item-update-form.php
-      item-update-form.php
+- Full CRUD operations  
+- Many-to-many relationship (orders ↔ items)  
+- SQL JOIN usage  
+- Aggregation with `SUM`  
+- Modular backend structure  
 
-.gitignore
-README.md
-```
+---
 
-## 🛠️ Como rodar o projeto
+## 🚀 How to Run
 
-1. Inicie o servidor
-2. Crie o banco de dados:
+1. Start a local server (e.g., XAMPP)  
+2. Create a MySQL database  
+3. Run the `database/schema.sql` file  
+4. Configure database connection in the project  
+5. Access through your browser  
 
-   ```sql
-   CREATE DATABASE plantas_burguer;
-   ```
-3. Execute o arquivo `schema.sql`
-4. Configure a conexão no arquivo `.secret`
-5. Acesse pelo navegador:
+---
 
-   ```
-   http://localhost/
-   ```
+## 📚 Notes
+
+- Academic project  
+- Backend-focused  
+- Simple interface  
